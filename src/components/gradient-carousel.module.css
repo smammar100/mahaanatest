@@ -1,0 +1,99 @@
+/* Scoped styles for Gradient Carousel (Clément Grellier tutorial) */
+
+.root {
+  --perspective: 1800px;
+  position: relative;
+  min-height: 480px;
+  height: 70vh;
+  width: 100%;
+  overflow: visible;
+}
+
+/* Gradient extends beyond carousel box (full-bleed) */
+.canvasWrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 120%;
+  min-height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+  perspective: var(--perspective, 1800px);
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: 1;
+}
+
+.stage:global(.carouselMode) {
+  touch-action: none;
+  cursor: grab;
+}
+
+.stage:global(.carouselMode.dragging) {
+  cursor: grabbing;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: blur(10px) saturate(1.575);
+  pointer-events: none;
+}
+
+.cards {
+  position: absolute;
+  inset: 0;
+  width: 680px;
+  left: 50%;
+  margin-left: -340px;
+  z-index: 10;
+  transform-style: preserve-3d;
+}
+
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(43.875vw, 607.5px);
+  aspect-ratio: 16/9;
+  isolation: isolate;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, filter;
+  transform-origin: 90% center;
+  contain: layout paint;
+}
+
+.cardImg {
+  border-radius: 15px;
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: translateZ(0);
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none !important;
+    animation: none !important;
+  }
+}
